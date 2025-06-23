@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
 
 
 
@@ -16,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await ApiManager.get('/auth/session');
             setUser(res.data.user);
-        } catch {
+        } catch (e) {
             setUser(null);
         } finally {
             setLoading(false);
@@ -25,18 +26,43 @@ export const AuthProvider = ({ children }) => {
 
 
     const login = async (email, password) => {
+        setLoading(true);
         try {
             const res = await ApiManager.post('/auth/login', { email, password });
             setUser(res.data.user);
-            console.log(res.data)
+            setMessage(res.data.message)
         } catch (error) {
             setError(error.response.data.error)
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    const signup = async (name, email, password) => {
+        setLoading(true);
+        try {
+            const res = await ApiManager.post('/auth/signup', { name, email, password });
+            setMessage(res.data.message)
+        } catch (error) {
+            setError(error.response.data.error)
+        } finally {
+            setLoading(false);
         }
     };
 
     const logout = async () => {
-        await ApiManager.post('/auth/logout');
-        setUser(null);
+        setLoading(true);
+        try {
+            await ApiManager.get('/auth/logout');
+            setUser(null);
+            setMessage(res.data.message)
+
+        } catch (error) {
+            setError(error.response.data.error)
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -44,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, error, login, logout }}>
+        <AuthContext.Provider value={{ user, loading, error, message, signup, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

@@ -5,7 +5,7 @@ import { UserModel } from "../models/user.model.js";
 
 
 export class AuthController {
-    async register(req, res) {
+    async signup(req, res) {
         try {
             // Validate params
             const { name, email, password } = req.body;
@@ -48,7 +48,7 @@ export class AuthController {
 
             setSessionCookie(res, user._id);
 
-            sendResponse(res, 200, { message: "Login Successful" })
+            sendResponse(res, 200, { message: "Login Successful", user })
         } catch (error) {
             console.error(error.message);
             sendResponse(res, 500, { error: "Internal Server Error" })

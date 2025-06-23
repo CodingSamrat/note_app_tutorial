@@ -9,7 +9,7 @@ export const AuthRouter = Router()
 const C = new AuthController();
 
 // Register
-AuthRouter.post('/register', C.register)
+AuthRouter.post('/signup', C.signup)
 // Login
 AuthRouter.post('/login', C.login)
 // Logout
