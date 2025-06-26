@@ -1,9 +1,10 @@
 "use client"
 
 import Button from "@/components/Button"
+import { useAuth } from "@/context/AuthContext"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 export default function page() {

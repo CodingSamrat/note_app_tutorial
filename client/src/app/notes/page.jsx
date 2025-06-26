@@ -3,6 +3,7 @@
 import Button from "@/components/Button"
 import { useAuth } from "@/context/AuthContext"
 import { useNote } from "@/context/NoteContext"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -29,13 +30,25 @@ export default function page() {
             <div className=" grid grid-cols-3 gap-5 py-5">
                 {
                     allNote?.map((note, i) => (
-                        <div className="border rounded px-5 py-3" key={`note_${i}`} >
+                        <Link href={`/notes/${note._id}`} key={`note_${i}`}>
+                            <div className="border rounded px-5 py-3"  >
+                                <p className="font-semibold">{note?.title}</p>
+                                <p className="text-sm mt-3">{note?.content}</p>
+                            </div>
+                        </Link>
+                    ))
+                }
+            </div>
+            {/* <div className=" grid grid-cols-3 gap-5 py-5">
+                {
+                    allNote?.map((note, i) => (
+                        <div onClick={() => router.push(`/notes/${note._id}`)} className="border rounded px-5 py-3" key={`note_${i}`} >
                             <p className="font-semibold">{note?.title}</p>
                             <p className="text-sm mt-3">{note?.content}</p>
                         </div>
                     ))
                 }
-            </div>
+            </div> */}
         </div>
     )
 }

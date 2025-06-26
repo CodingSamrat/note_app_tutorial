@@ -12,7 +12,7 @@ export default function NavBar() {
 
     async function onLogout() {
         await logout();
-        router.replace('/');
+        router.replace('/auth/login');
     }
 
 

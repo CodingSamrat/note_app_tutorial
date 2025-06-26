@@ -1,5 +1,6 @@
 "use client"
 import ApiManager from '@/config/api.config';
+import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 
@@ -11,7 +12,7 @@ export const NoteProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-
+    // const pathname = usePathname()
 
 
     const getAllNotes = async () => {

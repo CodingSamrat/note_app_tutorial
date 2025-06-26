@@ -46,7 +46,7 @@ export class AuthController {
             const isValid = comparePassword(password, user.password);
             if (!isValid) return sendResponse(res, 404, { error: "Invalid credentials" })
 
-            setSessionCookie(res, user._id);
+            setSessionCookie(res, user._id.toString());
 
             sendResponse(res, 200, { message: "Login Successful", user })
         } catch (error) {
@@ -70,7 +70,7 @@ export class AuthController {
         try {
             const user = req.user;
 
-            if (!user) return sendResponse(res, 500, { error: "Internal Server Error" });
+            if (!user) return sendResponse(res, 500, { error: "Internal Server Error", user: null });
 
             sendResponse(res, 200, { message: "Valid Session", user })
         } catch (error) {

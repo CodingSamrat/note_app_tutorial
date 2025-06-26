@@ -1,5 +1,6 @@
 "use client"
 import ApiManager from '@/config/api.config';
+import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 
@@ -11,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
 
-
+    const pathName = usePathname()
 
     const fetchSession = async () => {
         try {
@@ -54,11 +55,13 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         setLoading(true);
         try {
-            await ApiManager.get('/auth/logout');
+            const res = await ApiManager.get('/auth/logout');
             setUser(null);
             setMessage(res.data.message)
 
         } catch (error) {
+            console.error(error);
+
             setError(error.response.data.error)
         } finally {
             setLoading(false);
@@ -66,8 +69,10 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchSession();
-    }, []);
+        if (pathName.startsWith('/notes')) {
+            fetchSession();
+        }
+    }, [pathName]);
 
     return (
         <AuthContext.Provider value={{ user, loading, error, message, signup, login, logout }}>
