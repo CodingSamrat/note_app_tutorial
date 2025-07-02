@@ -60,7 +60,7 @@ export class NoteController {
             const note = await NoteModel.findByIdAndUpdate(id, { $set: { title, content } }, { new: true })
 
 
-            sendResponse(res, 200, { message: "ANote Updated", note })
+            sendResponse(res, 200, { message: "Note Updated", note })
         } catch (error) {
             console.error(error.message);
             sendResponse(res, 500, { error: "Internal Server Error" })

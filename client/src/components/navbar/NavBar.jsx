@@ -17,7 +17,7 @@ export default function NavBar() {
 
 
     return (
-        <div className='h-[4rem] px-3 bg-muted flex items-center gap-3 justify-between'>
+        <div className='h-[4rem] px-3 bg-muted flex items-center gap-3 justify-between sticky top-0 left-0 z-50'>
             <div className='grow  flex items-center gap-3'>
                 <div>
                     <h2 className='font-bold text-2xl'> <Link href={'/'}>NotePad</Link></h2>

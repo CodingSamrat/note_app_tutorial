@@ -33,8 +33,10 @@ export const NoteProvider = ({ children }) => {
             const res = await ApiManager.get(`/note/get/${id}`);
             setNote(res.data.note);
             setMessage(res.data.message)
+            return res;
         } catch (error) {
             setError(error.response.data.error)
+            return error.response;
         } finally {
             setLoading(false);
         }
@@ -47,8 +49,10 @@ export const NoteProvider = ({ children }) => {
             setMessage(res.data.message)
 
             await getAllNotes()
+            return res;
         } catch (error) {
             setError(error.response.data.error)
+            return error.response;
         } finally {
             setLoading(false);
         }
@@ -57,27 +61,32 @@ export const NoteProvider = ({ children }) => {
 
     const updateNote = async (id, title, content) => {
         setLoading(true);
+        console.log(id, title, content)
         try {
-            const res = await ApiManager.patch(`/note/update${id}`, { title, content });
+            const res = await ApiManager.patch(`/note/update/${id}`, { title, content });
             setMessage(res.data.message)
 
             await getAllNotes()
+            return res;
         } catch (error) {
             setError(error.response.data.error)
+            return error.response;
         } finally {
             setLoading(false);
         }
     };
 
-    const deleteNote = async (id, title, content) => {
+    const deleteNote = async (id) => {
         setLoading(true);
         try {
-            const res = await ApiManager.delete(`/note/delete${id}`);
+            const res = await ApiManager.delete(`/note/delete/${id}`);
             setMessage(res.data.message)
 
             await getAllNotes()
+            return res;
         } catch (error) {
             setError(error.response.data.error)
+            return error.response;
         } finally {
             setLoading(false);
         }
