@@ -1,20 +1,33 @@
 "use client"
 
-import { useAuth } from '@/context/AuthContext'
+import { AuthAction } from '@/redux/actions/auth.action'
 import { LogOut, User } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'sonner'
 
 export default function NavBar() {
-    const { user, logout } = useAuth()
     const router = useRouter()
+    const dispatch = useDispatch()
+    const { user } = useSelector(state => state.auth)
 
     async function onLogout() {
-        await logout();
-        router.replace('/auth/login');
+        const res = await dispatch(AuthAction.logout({}));
+
+        if (res.payload.message) {
+            toast.success(res.payload.message)
+            router.replace('/auth/login');
+        }
+        else if (res.payload.error) {
+            toast.error(res.payload.error)
+        }
     }
 
+    useEffect(() => {
+        dispatch(AuthAction.session({}));
+    }, [])
 
     return (
         <div className='h-[4rem] px-3 bg-muted flex items-center gap-3 justify-between sticky top-0 left-0 z-50'>

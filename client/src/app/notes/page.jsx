@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 export default function page() {
-    const { allNote, createNote, updateNote, deleteNote } = useNote()
+    // const { allNote, createNote, updateNote, deleteNote } = useNote()
     const router = useRouter()
 
     const [noteToEdit, setNoteToEdit] = useState(null)
@@ -90,7 +90,7 @@ export default function page() {
             <hr className="mt-5" />
             <hr className="mt-[1px]" />
             <div className=" grid grid-cols-3 gap-5 py-5">
-                {allNote?.map((note, i) => (
+                {/* {allNote?.map((note, i) => (
                     <div className="relative group hover:bg-accent border rounded  overflow-hidden" key={`note_${i}`}>
                         <div className="bg-accent/10 px-5 py-3" onClick={() => router.push(`/notes/${note._id}`)}>
                             <p className="font-semibold">{note?.title}</p>
@@ -103,7 +103,7 @@ export default function page() {
 
                         </div>
                     </div>
-                ))}
+                ))} */}
             </div>
             <div className="sticky top-0 left-0 w-20 aspect-square bg-red-400">
                 sticky

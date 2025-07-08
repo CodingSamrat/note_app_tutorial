@@ -1,38 +1,36 @@
 "use client"
 import Button from '@/components/Button'
-import Card from '@/components/Card'
-import NavBar from '@/components/navbar/NavBar'
-import ApiManager from '@/config/api.config'
-import { useAuth } from '@/context/AuthContext'
+import { AuthAction } from '@/redux/actions/auth.action'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 
 
 export default function page() {
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { login, error, message } = useAuth()
+
 
     async function onLogin() {
 
         if (!email) return toast.error('Enter email address')
         else if (!password) return toast.error('Enter password')
 
-        await login(email, password)
-    }
+        const res = await dispatch(AuthAction.login({ email, password }))
 
-    useEffect(() => {
-        if (message) {
-            toast.success(message)
+        if (res.payload.message) {
+            toast.success(res.payload.message)
             router.replace('/notes')
-        } else if (error) {
-            toast.error(error)
         }
-    }, [error, message])
+        else if (res.payload.error) {
+            toast.error(res.payload.error)
+        }
+    }
 
 
 
