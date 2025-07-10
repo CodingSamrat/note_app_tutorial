@@ -5,12 +5,12 @@ export const noteSlice = createSlice({
     name: "note",
     initialState: {
         note: null,
-        allNote: null,
+        allNote: [],
         loading: false,
     },
     reducers: {
-        setSearchQuery: (state, { payload }) => {
-            state.searchQuery = payload;
+        addNoteToArrayOnCreate: (state, { payload }) => {
+            state.allNote.unshift(payload);
         },
     },
     extraReducers: (builder) => {

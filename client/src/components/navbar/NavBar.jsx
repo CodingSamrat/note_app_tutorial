@@ -1,6 +1,7 @@
 "use client"
 
 import { AuthAction } from '@/redux/actions/auth.action'
+import { globalSlice } from '@/redux/slices/global.slice'
 import { LogOut, User } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -12,6 +13,7 @@ export default function NavBar() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { user } = useSelector(state => state.auth)
+    const { searchQuery } = useSelector(state => state.global)
 
     async function onLogout() {
         const res = await dispatch(AuthAction.logout({}));
@@ -36,6 +38,10 @@ export default function NavBar() {
                     <h2 className='font-bold text-2xl'> <Link href={'/'}>NotePad</Link></h2>
                 </div>
                 <Link href={'/notes'}>All Notes</Link>
+            </div>
+
+            <div>
+                <input value={searchQuery} onChange={e => dispatch(globalSlice.actions.setSearchQuery(e.target.value))} type="text" className='border rounded-2xl px-3 py-1 w-sm' placeholder='Search...' />
             </div>
 
             {user && <div className='text-sm flex items-center gap-3'>

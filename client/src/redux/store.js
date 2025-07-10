@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { RootReduce } from './root-reducer';
 
 
-export const makeUserStore = () => {
+export const makeStore = () => {
     return configureStore({
         reducer: RootReduce,
     })

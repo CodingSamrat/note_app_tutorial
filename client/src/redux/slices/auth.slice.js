@@ -5,12 +5,14 @@ export const authSlice = createSlice({
     name: "auth",
     initialState: {
         user: null,
-        searchQuery: '',
+        userId: null,
         loading: false,
+        message: false,
+        error: false,
     },
     reducers: {
-        setSearchQuery: (state, { payload }) => {
-            state.searchQuery = payload;
+        setUser: (state, action) => {
+            state.user = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -20,6 +22,8 @@ export const authSlice = createSlice({
             })
             .addCase(AuthAction.signup.fulfilled, (state, action) => {
                 state.loading = false;
+                // 200 ... 
+                // console.log()
             })
             .addCase(AuthAction.signup.rejected, (state, action) => {
                 state.loading = false;
@@ -59,10 +63,12 @@ export const authSlice = createSlice({
             })
             .addCase(AuthAction.session.fulfilled, (state, action) => {
                 state.loading = false;
+                state.message = action.payload.message;
                 state.user = action.payload.user;
             })
             .addCase(AuthAction.session.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.payload.error;
                 state.user = null;
             })
     }

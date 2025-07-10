@@ -2,9 +2,12 @@
 
 import Button from "@/components/Button"
 import { useNote } from "@/context/NoteContext"
+import { authSlice } from "@/redux/slices/auth.slice"
+import { noteSlice } from "@/redux/slices/note.slice"
 import { NotebookPen, Pen, Trash, } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import { toast } from "sonner"
 
 export default function page() {
@@ -15,13 +18,19 @@ export default function page() {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
 
+
     async function onCreate() {
         if (!title) return toast.error('Enter a title')
 
         const res = await createNote(title, content)
+        // Dispatch - CreateNote
+
         if (res.data.message) {
             toast.success(res.data.message)
             clearForm();
+            // Dispatch - addNoteToArrayOnCreate
+            dispatch(noteSlice.actions.addNoteToArrayOnCreate(res.payload.note));
+
         }
         else if (res.data.error) {
             toast.error(res.data.error)
