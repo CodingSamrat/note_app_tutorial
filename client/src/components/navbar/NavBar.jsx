@@ -2,12 +2,14 @@
 
 import { AuthAction } from '@/redux/actions/auth.action'
 import { globalSlice } from '@/redux/slices/global.slice'
-import { LogOut, User } from 'lucide-react'
+import { Loader2Icon, LogOut, User } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'sonner'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
 
 export default function NavBar() {
     const router = useRouter()
@@ -40,8 +42,10 @@ export default function NavBar() {
                 <Link href={'/notes'}>All Notes</Link>
             </div>
 
-            <div>
-                <input value={searchQuery} onChange={e => dispatch(globalSlice.actions.setSearchQuery(e.target.value))} type="text" className='border rounded-2xl px-3 py-1 w-sm' placeholder='Search...' />
+            <div className='flex items-center gap-3'>
+                <Input value={searchQuery} onChange={e => dispatch(globalSlice.actions.setSearchQuery(e.target.value))} placeholder='Search...' />
+                <Button >Search</Button>
+                <Loader2Icon className="animate-spin" />
             </div>
 
             {user && <div className='text-sm flex items-center gap-3'>

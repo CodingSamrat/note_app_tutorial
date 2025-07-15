@@ -1,14 +1,12 @@
 "use client"
 
 import Button from "@/components/Button"
-import { useAuth } from "@/context/AuthContext"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 export default function page() {
-    const { signup, error, message } = useAuth()
     const router = useRouter()
 
     const [name, setName] = useState('')
@@ -22,8 +20,6 @@ export default function page() {
         if (!email) return toast.error('Enter email address')
         else if (!password) return toast.error('Enter password')
 
-
-        await signup()
     }
 
     useEffect(() => {
