@@ -1,6 +1,7 @@
 "use client"
 import Button from '@/components/Button'
 import { AuthAction } from '@/redux/actions/auth.action'
+
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -26,6 +27,7 @@ export default function page() {
         if (res.payload.message) {
             toast.success(res.payload.message)
             router.replace('/notes')
+            localStorage.setItem('sid', res.payload.user._id.toString())
         }
         else if (res.payload.error) {
             toast.error(res.payload.error)

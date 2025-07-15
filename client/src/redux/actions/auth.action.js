@@ -50,8 +50,12 @@ export class AuthAction {
 
         async (payload, { rejectWithValue, fulfillWithValue }) => {
             try {
-                const { data } = await ApiManager.get(`/auth/session`);
-
+                const { data } = await ApiManager.get(`/auth/session`,);
+                // {
+                //     headers: {
+                //         'session': payload.sid
+                //     }
+                // }
                 return fulfillWithValue(data)
             } catch (error) {
                 return rejectWithValue(error.response.data);

@@ -30,6 +30,7 @@ export default function NavBar() {
     }
 
     useEffect(() => {
+        // const sid = localStorage.getItem('sid')
         dispatch(AuthAction.session({}));
     }, [])
 

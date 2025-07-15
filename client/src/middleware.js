@@ -12,7 +12,7 @@ export async function middleware(req) {
     try {
         const pathName = await req.nextUrl.pathname
         const _cookies = await cookies()
-        const sessionKey = _cookies.get('session')?.value
+        const sessionKey = _cookies.get('session')?.value;
 
 
         const url = `${process.env.NEXT_PUBLIC_API_BASE}/auth/session`
