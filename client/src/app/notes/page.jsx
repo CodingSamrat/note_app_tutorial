@@ -1,44 +1,45 @@
 "use client"
 
 import Button from "@/components/Button"
-import { useNote } from "@/context/NoteContext"
+import { NoteAction } from "@/redux/actions/note.action"
 import { authSlice } from "@/redux/slices/auth.slice"
 import { noteSlice } from "@/redux/slices/note.slice"
 import { NotebookPen, Pen, Trash, } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { toast } from "sonner"
 
 export default function page() {
-    // const { allNote, createNote, updateNote, deleteNote } = useNote()
+    const { allNote } = useSelector(s => s.note)
     const router = useRouter()
 
     const [noteToEdit, setNoteToEdit] = useState(null)
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
-
+    const dispatch = useDispatch()
 
     async function onCreate() {
         if (!title) return toast.error('Enter a title')
 
-        const res = await createNote(title, content)
+        const res = await dispatch(NoteAction.create({ title, content }))
         // Dispatch - CreateNote
 
-        if (res.data.message) {
-            toast.success(res.data.message)
+        if (res.payload.message) {
+            toast.success(res.payload.message)
             clearForm();
+            dispatch(NoteAction.getAll({}))
             // Dispatch - addNoteToArrayOnCreate
-            dispatch(noteSlice.actions.addNoteToArrayOnCreate(res.payload.note));
 
         }
-        else if (res.data.error) {
+        else if (res.payload.error) {
             toast.error(res.data.error)
         }
     }
 
 
     async function onUpdate() {
+        return toast.info('Not implemented')
         if (!title) return toast.error('Enter a title')
 
         const res = await updateNote(noteToEdit._id, title, content)
@@ -53,7 +54,7 @@ export default function page() {
     }
 
     async function onDelete(id) {
-
+        return toast.info('Not implemented')
         const res = await deleteNote(id)
         if (res.data.message) {
             toast.success(res.data.message)
@@ -68,6 +69,10 @@ export default function page() {
         setContent('')
     }
 
+
+    useEffect(() => {
+        dispatch(NoteAction.getAll({}))
+    }, [])
 
     useEffect(() => {
         if (noteToEdit) {
@@ -99,7 +104,7 @@ export default function page() {
             <hr className="mt-5" />
             <hr className="mt-[1px]" />
             <div className=" grid grid-cols-3 gap-5 py-5">
-                {/* {allNote?.map((note, i) => (
+                {allNote?.map((note, i) => (
                     <div className="relative group hover:bg-accent border rounded  overflow-hidden" key={`note_${i}`}>
                         <div className="bg-accent/10 px-5 py-3" onClick={() => router.push(`/notes/${note._id}`)}>
                             <p className="font-semibold">{note?.title}</p>
@@ -112,7 +117,7 @@ export default function page() {
 
                         </div>
                     </div>
-                ))} */}
+                ))}
             </div>
             <div className="sticky top-0 left-0 w-20 aspect-square bg-red-400">
                 sticky
