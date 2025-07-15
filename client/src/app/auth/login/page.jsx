@@ -26,7 +26,7 @@ export default function page() {
 
         if (res.payload.message) {
             toast.success(res.payload.message)
-            router.replace('/notes')
+            router.push('/notes')
         }
         else if (res.payload.error) {
             toast.error(res.payload.error)
