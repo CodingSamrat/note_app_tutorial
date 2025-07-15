@@ -6,7 +6,6 @@ export function setSessionCookie(res, value) {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: "lax",
-    // domain: process.env.COOKIE_DOMAIN
   });
 }
 export function clearSessionCookie(res) {

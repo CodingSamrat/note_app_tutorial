@@ -19,13 +19,13 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: ["http://localhost:3000", "http://192.168.100.191:3000", 'https://note-app-tutorial.vercel.app'],
+    origin: ["http://localhost:3000", "http://192.168.100.191:3000",],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
 }));
 
 app.get('/api', async (req, res) => {
-    res.json({ message: "Server is up and running" })
+    res.json({ message: "Server is up and running from express" })
 })
 
 
