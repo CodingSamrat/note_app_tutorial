@@ -17,6 +17,7 @@ ConfigureMongoDB()
 // Middleware -- 
 app.use(express.json())
 app.use(cookieParser())
+app.use(express.static('./public'))
 
 app.use(cors({
     origin: ["http://localhost:3000", "http://192.168.100.191:3000",],
@@ -27,6 +28,7 @@ app.use(cors({
 app.get('/api', async (req, res) => {
     res.json({ message: "Server is up and running from express" })
 })
+
 
 
 app.use('/api/auth', AuthRouter)

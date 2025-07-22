@@ -9,6 +9,9 @@ const nextConfig = {
             },
         ];
     },
+    images: {
+        remotePatterns: [new URL(`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/**`)],
+    },
 };
 
 export default nextConfig;
